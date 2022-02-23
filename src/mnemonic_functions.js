@@ -16,8 +16,8 @@ function entropySize(coinType) {
 function initialEntropy(coinType) {
   switch (coinType) {
     case 'bip39':
-      //return '00000000000000000000000000000000';
-      return '23db8160a31d3e0dca3688ed941adbf3';
+      return '00000000000000000000000000000000';
+      //return '23db8160a31d3e0dca3688ed941adbf3';
     case 'xmr':
       return '0000000000000000000000000000000000000000000000000000000000000000';
       //return '688b988f7de513383daa61f282807fe5aabe71a639aa58b9cb6beab6f5f80a0c';
