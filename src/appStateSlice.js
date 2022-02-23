@@ -33,7 +33,10 @@ export const appStateSlice = createSlice({
   reducers: {
     updateCoinType: (state, action) => {
       state.coinType = action.payload;
+      const newEntropy = mnemonics.initialEntropy(action.payload);
       state.entropy = mnemonics.initialEntropy(action.payload);
+      _updateMnemonic(state, newEntropy);
+      _updateDeck(state, newEntropy);
     },
     updateMnemonic: (state, action) => {
       try {
