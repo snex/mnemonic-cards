@@ -20,7 +20,7 @@ export default function Faq() {
         <p>this shit is free but you can donate monero to me at 481eZedQWukX66WAjAK2KJ8cgnnRJhzHKQvJdX8cJrPqbgJhicrf7reEv7F5EsT5BUaQ41AkBo1XBTHH4dCEY3kc4nY6it5</p>
       </Collapsible>
       <Collapsible trigger="+ some shit aint werkin right. where do i bitch?">
-        <p><a href="https://github.com/snex/mnemonic-cards" target="_new">make a github issue</a></p>
+        <p><a href="https://github.com/snex/mnemonic-cards/issues" target="_new">make a github issue</a></p>
       </Collapsible>
     </Collapsible>
   )
