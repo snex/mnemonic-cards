@@ -6,6 +6,7 @@ export default function Faq() {
     <Collapsible trigger="+ FAQ">
       <Collapsible trigger="+ the fuck is this?">
         <p>type in your crypto mnemonic phrase, get a uniquely ordered deck of cards that can be used to recover the mnemonic phrase</p>
+        <p>or you can drag and drop the cards around and get a mnemonic phrase back out from the deck</p>
       </Collapsible>
       <Collapsible trigger="+ why the fuck would i use this?">
         <p>cops find out about all the illegal shit you been doing. they raid your house. they see all your QR codes and pieces of paper with 12 or 25 words written on them. that shit's suspicious, so they take it. good job, now your life savings is gone.</p>
