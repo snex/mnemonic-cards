@@ -1,3 +1,11 @@
+# mnemonic-cards
+
+Source code for https://mnemonic-cards.herokuapp.com/
+
+## Donate
+XMR: 481eZedQWukX66WAjAK2KJ8cgnnRJhzHKQvJdX8cJrPqbgJhicrf7reEv7F5EsT5BUaQ41AkBo1XBTHH4dCEY3kc4nY6it5
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
