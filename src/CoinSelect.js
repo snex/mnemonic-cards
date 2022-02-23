@@ -1,31 +1,23 @@
-import React from 'react'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCoinType } from './appStateSlice.js';
 
-class CoinSelect extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      coinType: props.coinType
-    };
-  };
+export default function CoinSelect() {
+  const coinType = useSelector((state) => state.appState.coinType);
+  const dispatch = useDispatch();
 
-  render() {
-    var updateCoinType = this.props.update;
-    return (
-      <div>
-        <select
-          name="coin"
-          value={this.state.coinType}
-          onChange={ (e) => {
-            this.setState({ coinType: e.target.value });
-            updateCoinType(e.target.value);
-          }}
-        >
-          <option value="bip39">BIP39 (Bitcoin/ETH)</option>
-          <option value="xmr">Monero</option>
-        </select>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <select
+        name="coin"
+        value={coinType}
+        onChange={ (e) => {
+          dispatch(updateCoinType(e.target.value));
+        }}
+      >
+        <option value="bip39">BIP39 (Bitcoin/ETH)</option>
+        <option value="xmr">Monero</option>
+      </select>
+    </div>
+  );
 }
-
-export default CoinSelect;

@@ -4,61 +4,66 @@ import * as common from './common_functions.js';
 
 function newDeck() {
   return cardNames.CARD_NAMES.slice().concat(
-           cardNames.CARD_NAMES.map((x) => { return x + '_reverse'; })
-         );
+    cardNames.CARD_NAMES.map((x) => { return x + '_reverse'; })
+  );
 };
 
 function cardsToEntropy(cards, numBits) {
   const deck = newDeck();
+  var cardsCopy = cards.slice();
   var pile = [];
-  var bits = '';
+  var bits = [];
 
-  cards.reverse().forEach(card => {
-    pile.push(card.card);
+  cardsCopy.reverse().forEach(card => {
+    var cardName = '';
+    pile.push(card.id);
+    pile.push(card.id + '_reverse');
 
     if (card.reverse) {
-      pile.push(card.card.substr(0, card.card.indexOf('_reverse')));
+      cardName = card.id + '_reverse';
     } else {
-      pile.push(card.card + '_reverse');
+      cardName = card.id
     }
 
     pile = deck.filter(x => pile.indexOf(x) !== -1);
-    console.log(pile);
     const bitsAvail = Math.floor(Math.log2(pile.length));
-    console.log('bitsAvail: ' + bitsAvail);
-    const cardIndex = pile.indexOf(card.card);
-    console.log('cardIndex: ' + cardIndex);
+    const cardIndex = pile.indexOf(cardName);
     const cardIndexBits = common.lpad(cardIndex.toString(2), '0', bitsAvail);
-    console.log('cardIndexBits: ' + cardIndexBits);
-    bits = bits + cardIndexBits;
-    console.log('bits: ' + bits);
+    bits.push(cardIndexBits);
   });
 
-  console.log(bits);
-  console.log(bits.length);
+  bits.reverse();
+  var bitsStr = '';
+  var bitsUsed = 0;
 
-  if (bits.length > numBits) {
-    bits = bits.slice(bits.length - numBits);
+  bits.forEach(bitChunk => {
+    // this is to handle the BIP39 checksum bits at the end
+    if (bitsUsed + bitChunk.length > numBits) {
+      bitsStr += bitChunk.slice(bitChunk.length - (numBits - bitsUsed));
+      bitsUsed += bitChunk.length;
+    } else {
+      bitsStr += bitChunk;
+      bitsUsed += bitChunk.length;
+    }
+  });
+
+  if (bitsStr.length > numBits) {
+    bitsStr = bitsStr.slice(0, numBits);
   } else {
-    bits = common.lpad(bits, '0', numBits);
+    bitsStr = common.lpad(bitsStr, '0', numBits);
   }
-  console.log('after adjust numBits');
-  console.log(bits);
-  console.log(bits.length);
-  console.log(parseInt(bits, 2).toString(16));
-  return parseInt(bits, 2).toString(16);
+  return common.lpad(BigInt('0b' + bitsStr).toString(16), '0', numBits / 4);
 };
 
 function entropyToCards(entropy, numBits) {
   var deck = newDeck();
   var cards = [];
   const entropyBits = common.lpad(BigInt('0x' + entropy).toString(2), '0', numBits);
-  console.log(entropyBits);
   var enumerator = 0;
 
   while (deck.length > 0) {
     const bitsAvail = Math.floor(Math.log2(deck.length));
-    const bits = entropyBits.substr(enumerator, bitsAvail) || '0';
+    const bits = common.lpad(entropyBits.substr(enumerator, bitsAvail) || '0', '0', bitsAvail);
     const cardIndex = parseInt(bits, 2);
     var card = deck[cardIndex];
     var reverseCard = '';
@@ -66,13 +71,13 @@ function entropyToCards(entropy, numBits) {
     if (card.match(/_reverse/)) {
       reverseCard = card.substr(0, card.indexOf('_reverse'));
       cards.push({
-        card:    reverseCard,
+        id:      reverseCard,
         reverse: true
       });
     } else {
       reverseCard = card + '_reverse';
       cards.push({
-        card:    card,
+        id:      card,
         reverse: false
       });
     }

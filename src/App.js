@@ -1,9 +1,17 @@
 import './App.css';
-import AppState from './AppState.js';
+import CardTable from './CardTable.js';
+import CoinSelect from './CoinSelect.js';
+import EntropyTest from './EntropyTest.js';
+import Mnemonic from './Mnemonic.js';
 
 function App() {
   return (
-    <AppState/>
+    <div>
+      <EntropyTest/>
+      <CoinSelect/>
+      <Mnemonic/>
+      <CardTable/>
+    </div>
   );
 }
 

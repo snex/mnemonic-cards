@@ -3,6 +3,8 @@ import { sha256 } from 'js-sha256';
 import * as common from './common_functions.js';
 import english from './wordlists/bip39/english.json';
 
+const ENTROPY_SIZE = 128;
+
 function checksum(entropy) {
   var packedEntropy = []
   for (var i = 0; i < entropy.length; i += 2) {
@@ -46,4 +48,4 @@ function mnemonicToEntropy(mnemonic) {
   return BigInt('0b' + bits).toString(16);
 }
 
-export { entropyToMnemonic, mnemonicToEntropy };
+export { ENTROPY_SIZE, entropyToMnemonic, mnemonicToEntropy };

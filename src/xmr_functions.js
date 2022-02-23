@@ -2,6 +2,8 @@ import * as crc32 from 'crc-32';
 import * as common from './common_functions.js';
 import english from './wordlists/xmr/english.json';
 
+const ENTROPY_SIZE = 256;
+
 function entropyToMnemonic(entropy) {
   const wordsLen = english.length;
   const chunks = entropy.match(/(.{1,8})/g);
@@ -61,4 +63,4 @@ function mnemonicToEntropy(mnemonic) {
   return entropy;
 }
 
-export { entropyToMnemonic, mnemonicToEntropy };
+export { ENTROPY_SIZE, entropyToMnemonic, mnemonicToEntropy };

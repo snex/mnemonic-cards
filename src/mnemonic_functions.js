@@ -1,6 +1,18 @@
 import * as bip39 from './bip39_functions.js';
 import * as xmr from './xmr_functions.js';
 
+function entropySize(coinType) {
+  switch(coinType) {
+    case 'bip39':
+      return bip39.ENTROPY_SIZE;
+    case 'xmr':
+      return xmr.ENTROPY_SIZE;
+    default:
+      console.log('unknown coinType: ' + coinType);
+      return 0
+  }
+};
+
 function initialEntropy(coinType) {
   switch (coinType) {
     case 'bip39':
@@ -39,4 +51,4 @@ function mnemonicToEntropy(mnemonic, coinType) {
   }
 }
 
-export { initialEntropy, entropyToMnemonic, mnemonicToEntropy };
+export { entropySize, initialEntropy, entropyToMnemonic, mnemonicToEntropy };
