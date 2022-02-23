@@ -47,7 +47,7 @@ export default function Card(props) {
         ref={setNodeRef}
         width="84"
         height="122"
-        onContextMenu={ (e)=> {
+        onDoubleClick={ (e)=> {
           dispatch(swapReverse(thisCard));
           e.preventDefault();
         }}
