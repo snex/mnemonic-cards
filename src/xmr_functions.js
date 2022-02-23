@@ -39,13 +39,17 @@ function mnemonicToEntropy(mnemonic) {
   const chunks = common.eachSlice(mnemonic.split(' '), 3);
   const entropy = chunks.map((chunk) => {
     const word1Index = english.indexOf(chunk[0]);
-    const word2Index = english.indexOf(chunk[1]);
+
+    if (word1Index === -1) {
+      throw new Error('Invalid mnemonic');
+    };
 
     if (chunk[1] === undefined) {
       // this means we are looking at the checksum word. just escape
       return '';
     }
 
+    const word2Index = english.indexOf(chunk[1]);
     const word3Index = english.indexOf(chunk[2]);
     const val = wordsLen * wordsLen * (((wordsLen - word2Index) + word3Index) % wordsLen) +
                 wordsLen * (((wordsLen - word1Index) + word2Index) % wordsLen) +
