@@ -2,53 +2,65 @@ import { createSlice } from '@reduxjs/toolkit';
 import * as mnemonics from './mnemonic_functions.js';
 import * as cards from './card_functions.js';
 
-function _updateMnemonic(state, action) {
+function _updateMnemonic(state, newEntropy) {
   state.mnemonic = mnemonics.entropyToMnemonic(
-    cards.cardsToEntropy(
-      state.deck,
-      mnemonics.entropySize(state.coinType)
-    ),
+    newEntropy,
     state.coinType
   );
 };
 
+function _updateDeck(state, newEntropy) {
+  state.deck = cards.entropyToCards(
+    newEntropy,
+    mnemonics.entropySize(state.coinType)
+  );
+};
+
+const initialCoinType = 'bip39';
+const initialEntropy  = mnemonics.initialEntropy(initialCoinType);
+const initialMnemonic = mnemonics.entropyToMnemonic(initialEntropy, initialCoinType);
+const initialDeck     = cards.entropyToCards(initialEntropy, mnemonics.entropySize(initialCoinType));
+
 export const appStateSlice = createSlice({
   name: 'appState',
   initialState: {
-    coinType: 'bip39',
-    mnemonic: mnemonics.entropyToMnemonic(
-      mnemonics.initialEntropy('bip39'),
-      'bip39'
-    ),
-    deck: cards.entropyToCards(
-      mnemonics.initialEntropy('bip39'),
-      mnemonics.entropySize('bip39')
-    )
+    coinType: initialCoinType,
+    entropy:  initialEntropy,
+    mnemonic: initialMnemonic,
+    deck:     initialDeck,
+    invalidMnemonic: false
   },
   reducers: {
     updateCoinType: (state, action) => {
       state.coinType = action.payload;
-      state.mnemonic = mnemonics.entropyToMnemonic(
-        mnemonics.initialEntropy(action.payload),
-        action.payload
-      );
-      state.deck = cards.entropyToCards(
-        mnemonics.initialEntropy(action.payload),
-        mnemonics.entropySize(action.payload)
-      );
+      state.entropy = mnemonics.initialEntropy(action.payload);
     },
     updateMnemonic: (state, action) => {
-      state.mnemonic = action.payload;
+      try {
+        state.mnemonic = action.payload;
+        const newEntropy = mnemonics.mnemonicToEntropy(action.payload, state.coinType);
+        _updateDeck(state, newEntropy);
+        state.invalidMnemonic = false;
+      } catch (e) {
+        if (e.message === 'Invalid mnemonic') {
+          state.invalidMnemonic = true;
+        }
+      }
     },
     updateDeck: (state, action) => {
       state.deck = action.payload;
-      _updateMnemonic(state, action);
+      const numBits = mnemonics.entropySize(state.coinType);
+      const newEntropy = cards.cardsToEntropy(action.payload, numBits);
+      state.entropy = newEntropy;
+      _updateMnemonic(state, newEntropy);
     },
     swapReverse: (state, action) => {
       var card = state.deck.find(card => card.id == action.payload);
-
       card.reverse = !card.reverse;
-      _updateMnemonic(state, action);
+      const numBits = mnemonics.entropySize(state.coinType);
+      const newEntropy = cards.cardsToEntropy(state.deck, numBits);
+      state.entropy = newEntropy;
+      _updateMnemonic(state, newEntropy);
     }
   }
 });
