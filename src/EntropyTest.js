@@ -1,4 +1,3 @@
-import React from 'react';
 import * as mnemonics from './mnemonic_functions.js';
 import * as cards from './card_functions.js';
 

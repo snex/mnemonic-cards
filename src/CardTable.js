@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   DndContext,
@@ -52,7 +52,6 @@ export default function CardTable() {
     if (active.id !== over.id) {
       const oldIndex = items.findIndex(({id}) => id === active.id);
       const newIndex = items.findIndex(({id}) => id === over.id);
-      const newDeck = arrayMove(items, oldIndex, newIndex);
 
       dispatch(updateDeck(arrayMove(items, oldIndex, newIndex)));
     };

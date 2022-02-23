@@ -58,7 +58,7 @@ export const appStateSlice = createSlice({
       _updateMnemonic(state, newEntropy);
     },
     swapReverse: (state, action) => {
-      var card = state.deck.find(card => card.id == action.payload);
+      var card = state.deck.find(card => card.id === action.payload);
       card.reverse = !card.reverse;
       const numBits = mnemonics.entropySize(state.coinType);
       const newEntropy = cards.cardsToEntropy(state.deck, numBits);

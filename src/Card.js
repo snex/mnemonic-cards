@@ -7,7 +7,7 @@ import { swapReverse } from './appStateSlice.js';
 export default function Card(props) {
   const thisCard = props.id;
   const reverse = useSelector((state) => {
-    return state.appState.deck.find(card => card.id == thisCard).reverse
+    return state.appState.deck.find(card => card.id === thisCard).reverse
   });
   const dispatch = useDispatch();
   const {
