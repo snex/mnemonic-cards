@@ -1,0 +1,5 @@
+.Collapsible__trigger {
+  color:           blue;
+  text-decoration: underline;
+  cursor:          pointer;
+}

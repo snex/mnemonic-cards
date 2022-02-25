@@ -1,6 +1,8 @@
 import React from 'react';
 import Collapsible from 'react-collapsible';
 
+import './Faq.css';
+
 export default function Faq() {
   return (
     <Collapsible trigger="+ FAQ">
