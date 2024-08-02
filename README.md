@@ -1,6 +1,6 @@
 # mnemonic-cards
 
-Source code for https://mnemonic-cards.herokuapp.com/
+Source code for https://home.xens.org/xmr/
 
 ## Donate
 XMR: 481eZedQWukX66WAjAK2KJ8cgnnRJhzHKQvJdX8cJrPqbgJhicrf7reEv7F5EsT5BUaQ41AkBo1XBTHH4dCEY3kc4nY6it5
