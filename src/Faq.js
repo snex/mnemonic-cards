@@ -11,8 +11,8 @@ export default function Faq() {
         <p>or you can drag and drop the cards around and get a mnemonic phrase back out from the deck</p>
       </Collapsible>
       <Collapsible trigger="+ why the fuck would i use this?">
-        <p>cops find out about all the illegal shit you been doing. they raid your house. they see all your QR codes and pieces of paper with 12 or 25 words written on them. that shit's suspicious, so they take it. good job, now your life savings is gone.</p>
-        <p>cops find a deck of cards. they ignore it because that's not suspicious.</p>
+        <p>your house gets robbed. robbers see all your QR codes and pieces of paper with 12 or 25 words written on them. everyone knows what that is, so they take it. good job, now your life savings is gone.</p>
+        <p>robbers find a deck of cards. they ignore it because that's worthless.</p>
         <p>million other reasons to prefer a deck of cards over a mnemonic phrase that you can't remember anyway.</p>
       </Collapsible>
       <Collapsible trigger="+ momma told me to never type my mnemonic phrase into strange websites!">
